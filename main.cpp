@@ -183,6 +183,7 @@ void FindStudentByName(Student**& dbIndex, unsigned long long dbIndexSize){
 	cout << "Find by name" << endl;
 	string input;
 	cout << "Name: ";
+	cin.ignore();
 	getline(cin, input);
 	// brute-force find
 	for (unsigned long long i = 0; i < dbIndexSize - 1; i++){
