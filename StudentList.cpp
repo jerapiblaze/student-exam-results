@@ -15,19 +15,24 @@ void StudentList::removeNode(int Id){
 	if (this->HEAD == NULL){
 		return;
 	}
-	StudentNode* p = this->HEAD;
-	if (p->data.getId() == Id){
-		this->HEAD = p->next;
-		delete p;
+	StudentNode* tmp;
+	if (this->HEAD->data.getId() == Id){
+		tmp = this->HEAD;
+		this->HEAD = this->HEAD->next;
+		delete tmp;
+		return;
 	}
+	StudentNode* p = this->HEAD;
 	while (p->next != NULL){
 		if (p->next->data.getId() == Id){
-			StudentNode* target = p->next;
-			p->next = target->next;
-			delete target;
-		} 
-		p = p->next;
+			tmp = p->next;
+			p->next = p->next->next;
+			delete tmp;
+		} else {
+			p = p->next;
+		}
 	}
+	
 };
 StudentNode* StudentList::getNode(int Id){
 	if (this->HEAD == NULL){

@@ -24,9 +24,10 @@ void PrintDecendList(StudentList& db);
 void RebuildIndex(StudentList& db, Student**& dbIndex);
 void DumpIndex(Student** dbIndex, unsigned long long dbIndexSize);
 void SortIndexByAvgAsc(Student**& dbIndex, unsigned long long dbIndexSize);
+void FindStudentByName(Student**& dbIndex, unsigned long long dbIndexSize);
 
 int main(){
-	string MainMenuItems[] = {"Nhap diem", "Sua diem", "Xoa", "Tim thi sinh", "In danh sach", "Thoat"};
+	string MainMenuItems[] = {"Input", "Edit", "Delete", "Find by name", "Show full list", "Exit"};
 	int usr;
 	do {
 		usr = Menu("Quan li diem thi", 6, MainMenuItems);
@@ -47,7 +48,7 @@ int main(){
 				break;
 			}
 			case 4: {
-				
+				FindStudentByName(dbIndex, dbIndexSize);
 				break;
 			}
 			case 5: {
@@ -56,7 +57,7 @@ int main(){
 			}
 		}
 		
-		cout << "Bam phim bat ki de tiep tuc..." << endl;
+		cout << "Press any key to continue..." << endl;
 		getch();
 	} while (usr != 6);
 	return 0;
@@ -78,6 +79,7 @@ int Menu(string menuTitle, int maxItems = 0, string itemsList[] = NULL){
 		cout << "Invalid!" << endl;
 		cin >> usr;
 	}
+	cout << "\033[2J\033[1;1H";
 	return usr;
 };
 
@@ -145,6 +147,7 @@ void DumpList(StudentList& db){
 };
 
 void DumpIndex(Student** dbIndex, unsigned long long dbIndexSize){
+	cout << "Student list" << endl;
 	for (unsigned long long i = 0; i < dbIndexSize; i++){
 		printfStudent(*dbIndex[i]);
 	}	
@@ -166,14 +169,27 @@ void RemoveStudent(StudentList& db){
 };
 
 void RebuildIndex(StudentList& db, Student**& dbIndex){
-	cout << "Dang xay dung lai chi muc...";
+	cout << "Rebuilding index...";
 	if (dbIndex != 0){
 		delete[] dbIndex;
 	}
 	dbIndexSize = db.getSize();
 	dbIndex = db.toArray();
 	SortIndexByAvgAsc(dbIndex,dbIndexSize);
-	cout << "Hoan tat." << endl;
+	cout << "Completed." << endl;
+};
+
+void FindStudentByName(Student**& dbIndex, unsigned long long dbIndexSize){
+	cout << "Find by name" << endl;
+	string input;
+	cout << "Name: ";
+	getline(cin, input);
+	// brute-force find
+	for (unsigned long long i = 0; i < dbIndexSize - 1; i++){
+		if (dbIndex[i]->getFullname().find(input) != string::npos){
+			printfStudent(*dbIndex[i]);
+		}
+	}	
 };
 
 void merge(Student* a[], unsigned long long lo1, unsigned long long hi1, unsigned long long lo2, unsigned long long hi2){
