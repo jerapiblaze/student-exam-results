@@ -3,10 +3,13 @@
 
 #include <iostream>
 #include <conio.h>
+#include <utility>
 
 using namespace std;
 
 StudentList db;
+Student** dbIndex = 0;
+unsigned long long dbIndexSize = 0;
 
 int Menu(string menuTitle, int maxItems, string* itemsList);
 void scanfStudent(Student& s);
@@ -17,32 +20,44 @@ void InputStudent(StudentList& db);
 void DumpList(StudentList& db);
 void RemoveStudent(StudentList& db);
 void EditStudent(StudentList& db);
+void PrintDecendList(StudentList& db);
+void RebuildIndex(StudentList& db, Student**& dbIndex);
+void DumpIndex(Student** dbIndex, unsigned long long dbIndexSize);
 
 int main(){
-	string MainMenuItems[] = {"Nhap diem", "Sua diem", "Xoa", "In danh sach", "Thoat"};
-	int usr = Menu("Quan li diem thi", 5, MainMenuItems);
+	string MainMenuItems[] = {"Nhap diem", "Sua diem", "Xoa", "Tim thi sinh", "In danh sach", "Thoat"};
+	int usr;
 	do {
+		usr = Menu("Quan li diem thi", 6, MainMenuItems);
 		switch(usr){
 			case 1: {
 				InputStudent(db);
+				RebuildIndex(db, dbIndex);
 				break;
 			}
 			case 2: {
 				EditStudent(db);
+				RebuildIndex(db, dbIndex);
 				break;
 			}
 			case 3: {
 				RemoveStudent(db);
+				RebuildIndex(db, dbIndex);
 				break;
 			}
 			case 4: {
-				DumpList(db);
+				
+				break;
+			}
+			case 5: {
+				DumpIndex(dbIndex, dbIndexSize);
 				break;
 			}
 		}
+		
+		cout << "Bam phim bat ki de tiep tuc..." << endl;
 		getch();
-		usr = Menu("Quan li diem thi", 5, MainMenuItems);
-	} while (usr != 5);
+	} while (usr != 6);
 	return 0;
 }
 
@@ -69,6 +84,7 @@ void scanfStudent(Student& s){
 	int Id;
 	string Fullname;
 	Date DoB;
+	int Gender;
 	int Math;
 	int Phys;
 	int Chem;
@@ -79,17 +95,21 @@ void scanfStudent(Student& s){
 	getline(cin, Fullname);
 	cout << "DayOfBirth: ";
 	scanfDate(DoB);
+	cout << "Gender: ";
+	cin >> Gender;
 	cout << "Math: ";
 	cin >> Math;
 	cout << "Phys: ";
 	cin >> Phys;
 	cout << "Chem: ";
 	cin >> Chem;
-	s = Student(Id, Fullname, DoB, Math, Phys, Chem);
+	s = Student(Id, Fullname, DoB, Gender, Math, Phys, Chem);
 };
 void printfStudent(Student& s){
-	cout << s.getId() << '\t' << s.getDoB().toString() << '\t' << s.getFullname() << endl;
-	cout << "Avg:" << s.getAvg() << '\t' << "M:" << s.getMath() << '\t' << "P:" << s.getPhys() << '\t' << "C:" << s.getChem() << endl;
+	cout << "ID:" << s.getId() << "\t\t" << "Name:" << s.getFullname() << endl;
+	cout << "G:" << ((s.getGender() == 0) ? "Male" : (s.getGender() == 1 ? "Female" : "Others")) << '\t' << "DoB:" << s.getDoB().toString() << endl;
+	cout << "Avg:" << s.getAvg() << "\t\t" << "M:" << s.getMath() << '\t' << "P:" << s.getPhys() 	<< '\t' << "C:" << s.getChem() << endl;
+	cout << "----" << endl;
 };
 void scanfDate(Date& d){
 	int day, month, year;
@@ -106,9 +126,10 @@ void InputStudent(StudentList& db){
 	while (usr != '/'){
 		Student* s = new Student();
 		scanfStudent(*s);
-		printfStudent(*s);
 		db.addNode(*s);
-		cout << "Continue? Type / to exit\n";
+		cout << "--ReCheck Info--" << endl;
+		printfStudent(db.getHead()->data);
+		cout << "Continue? Type / to exit" << endl;
 		usr = getch();
 	}
 };
@@ -120,6 +141,12 @@ void DumpList(StudentList& db){
 		printfStudent(p->data);
 		p = p->next;
 	}
+};
+
+void DumpIndex(Student** dbIndex, unsigned long long dbIndexSize){
+	for (unsigned long long i = 0; i < dbIndexSize; i++){
+		printfStudent(*dbIndex[i]);
+	}	
 };
 
 void EditStudent(StudentList& db){
@@ -135,4 +162,14 @@ void RemoveStudent(StudentList& db){
 	cout << "StudentId: ";
 	cin >> Id;
 	db.removeNode(Id);
+};
+
+void RebuildIndex(StudentList& db, Student**& dbIndex){
+	cout << "Dang xay dung lai chi muc...";
+	if (dbIndex != 0){
+		delete[] dbIndex;
+	}
+	dbIndexSize = db.getSize();
+	dbIndex = db.toArray();
+	cout << "Hoan tat." << endl;
 };

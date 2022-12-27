@@ -11,6 +11,10 @@ Date::Date(){
 }
 
 Date::Date(int d = 1, int m = 1, int y = 2000){
+	this->setYear(1);
+	this->setMonth(1);
+	this->setDay(2000);
+	
 	this->setYear(y);
 	this->setMonth(m);
 	this->setDay(d);
@@ -28,31 +32,33 @@ int Date::getYear(){
 	return this->year;
 }
 
-void Date::setDay(int d){
+Date* Date::setDay(int d){
 	if (d > DaysOfMonth(this->month, this->year) || d <= 0){
-		return;
+		return this;
 	}
 	this->date = d;
+	return this;
 }
 
-void Date::setMonth(int m){
+Date* Date::setMonth(int m){
 	if (m > 12 || m <= 0){
-		return;
+		return this;
 	}
-	
 	if (m == 2){
 		if (this->date > DaysOfMonth(2, this->year)){
-			return;
+			return this;
 		}
 	}
 	this->month = m;
+	return this;
 }
 
-void Date::setYear(int y){
+Date* Date::setYear(int y){
 	if (y <= 0){
-		return;
+		return this;
 	}
 	this->year = y;
+	return this;
 }
 
 int DaysOfMonth(int m, int y){

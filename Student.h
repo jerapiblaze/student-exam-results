@@ -11,12 +11,13 @@ class Student{
 		int Id;
 		string Fullname;
 		Date DoB;
+		int Gender; // 0 Male 1 Female 2 Other
 		int Math;
 		int Phys;
 		int Chem;
 	public:
 		Student();
-		Student(int Id, string Fullname, Date DoB, int Math, int Phys, int Chem);
+		Student(int Id, string Fullname, Date DoB, int Gender, int Math = 0, int Phys = 0, int Chem = 0);
 		
 		int getId();
 		string getFullname();
@@ -24,13 +25,15 @@ class Student{
 		int getMath();
 		int getPhys();
 		int getChem();
+		int getGender();
 		
-		void setId(int Id);
-		void setFullname(string Fullname);
-		void setDoB(Date DoB);
-		void setMath(int Math);
-		void setPhys(int Phys);
-		void setChem(int Chem);
+		Student* setId(int Id);
+		Student* setFullname(string Fullname);
+		Student* setDoB(Date DoB);
+		Student* setMath(int Math);
+		Student* setPhys(int Phys);
+		Student* setChem(int Chem);
+		Student* setGender(int Gender);
 		
 		int getAvg();
 };
@@ -57,4 +60,7 @@ class StudentList{
 		StudentNode* editNode(int Id, Student& s);
 		
 		StudentNode* getHead();
+		
+		unsigned long long getSize();
+		Student** toArray();
 };

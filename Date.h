@@ -17,9 +17,9 @@ class Date{
 		int getMonth();
 		int getYear();
 		
-		void setDay(int d);
-		void setMonth(int m);
-		void setYear(int y);
+		Date* setDay(int d);
+		Date* setMonth(int m);
+		Date* setYear(int y);
 		
 		string toString();
 };

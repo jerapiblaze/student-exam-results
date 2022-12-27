@@ -6,13 +6,14 @@ bool isValidPoint(int p);
 Student::Student(){
 	
 };
-Student::Student(int Id, string Fullname, Date DoB, int Math, int Phys, int Chem){
+Student::Student(int Id, string Fullname, Date DoB, int Gender, int Math, int Phys, int Chem){
 	this->setId(Id);
 	this->setFullname(Fullname);
 	this->setDoB(DoB);
 	this->setMath(Math);
 	this->setPhys(Phys);
 	this->setChem(Chem);
+	this->setGender(Gender);
 };
 		
 int Student::getId(){
@@ -33,31 +34,50 @@ int Student::getPhys(){
 int Student::getChem(){
 	return this->Chem;
 };
+int Student::getGender(){
+	return this->Gender;
+}
 		
-void Student::setId(int Id){
+Student* Student::setId(int Id){
 	this->Id = Id;
+	return this;
 };
-void Student::setFullname(string Fullname){
+Student* Student::setFullname(string Fullname){
 	this->Fullname = Fullname;
+	return this;
 };
-void Student::setDoB(Date DoB){
+Student* Student::setDoB(Date DoB){
 	this->DoB = DoB;
+	return this;
 };
-void Student::setMath(int Math){
-	if (isValidPoint){
+Student* Student::setMath(int Math){
+	if (isValidPoint(Math)){
 		this->Math = Math;
+	} else {
+		this->Math = 0;
 	}
+	return this;
 };
-void Student::setPhys(int Phys){
-	if (isValidPoint){
+Student* Student::setPhys(int Phys){
+	if (isValidPoint(Phys)){
 		this->Phys = Phys;
+	} else {
+		this->Phys = 0;
 	}
+	return this;
 };
-void Student::setChem(int Chem){
-	if (isValidPoint){
+Student* Student::setChem(int Chem){
+	if (isValidPoint(Chem)){
 		this->Chem = Chem;
+	} else {
+		this->Chem = 0;
 	}
+	return this;
 };
+Student* Student::setGender(int Gender){
+	this->Gender = Gender;
+	return this;
+}
 		
 int Student::getAvg(){
 	float avg = (this->Math + this->Phys + this->Chem) / 3.0;
@@ -65,7 +85,7 @@ int Student::getAvg(){
 };
 
 bool isValidPoint(int p){
-	if (p > 10 || p < 0){
+	if (p > 100 || p < 0){
 		return false;
 	}
 	return true;
