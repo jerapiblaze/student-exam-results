@@ -88,9 +88,9 @@ void scanfStudent(Student& s){
 	string Fullname;
 	Date DoB;
 	int Gender;
-	int Math;
-	int Phys;
-	int Chem;
+	float Math;
+	float Phys;
+	float Chem;
 	cout << "StudentId: ";
 	cin >> Id;
 	cout << "StudentName: ";
@@ -109,10 +109,27 @@ void scanfStudent(Student& s){
 	s = Student(Id, Fullname, DoB, Gender, Math, Phys, Chem);
 };
 void printfStudent(Student& s){
-	cout << "ID:" << s.getId() << "\t\t" << "Name:" << s.getFullname() << endl;
-	cout << "G:" << ((s.getGender() == 0) ? "Male" : (s.getGender() == 1 ? "Female" : "Others")) << '\t' << "DoB:" << s.getDoB().toString() << endl;
-	cout << "Avg:" << s.getAvg() << "\t\t" << "M:" << s.getMath() << '\t' << "P:" << s.getPhys() 	<< '\t' << "C:" << s.getChem() << endl;
-	cout << "----" << endl;
+	cout.setf(ios::fixed);
+	cout.setf(ios::showpoint);
+	cout.precision(2);
+	
+	cout.width(10);
+	cout << s.getId() << '|';
+	cout.width(25);
+	cout << s.getFullname() << '|';
+	cout.width(2);
+	cout << ((s.getGender() == 0) ? "M" : (s.getGender() == 1 ? "F" : "O")) << '|';
+	cout.width(12);
+	cout << s.getDoB().toString() << '|';
+	cout.width(6);
+	cout << s.getMath() << '|';
+	cout.width(6);
+	cout << s.getPhys() << '|';
+	cout.width(6);
+	cout << s.getChem() << '|';
+	cout.width(6);
+	cout << s.getAvg() << '|';
+	cout << endl;
 };
 void scanfDate(Date& d){
 	int day, month, year;
@@ -148,6 +165,26 @@ void DumpList(StudentList& db){
 
 void DumpIndex(Student** dbIndex, unsigned long long dbIndexSize){
 	cout << "Student list" << endl;
+	
+	cout.width(10);
+	cout << "ID" << '|';
+	cout.width(25);
+	cout << "Fullname" << '|';
+	cout.width(2);
+	cout << "G" << '|';
+	cout.width(12);
+	cout << "DoB" << '|';
+	cout.width(6);
+	cout << "Math" << '|';
+	cout.width(6);
+	cout << "Phys" << '|';
+	cout.width(6);
+	cout << "Chem" << '|';
+	cout.width(6);
+	cout << "Avg" << '|';
+	cout << endl;
+	cout << "---------------------------------------------------------------------------------" << endl;
+	
 	for (unsigned long long i = 0; i < dbIndexSize; i++){
 		printfStudent(*dbIndex[i]);
 	}	

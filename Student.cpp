@@ -1,12 +1,12 @@
 #include "Student.h"
 #include "Date.h"
 
-bool isValidPoint(int p);
+bool isValidPoint(float p);
 
 Student::Student(){
 	
 };
-Student::Student(int Id, string Fullname, Date DoB, int Gender, int Math, int Phys, int Chem){
+Student::Student(int Id, string Fullname, Date DoB, int Gender, float Math, float Phys, float Chem){
 	this->setId(Id);
 	this->setFullname(Fullname);
 	this->setDoB(DoB);
@@ -25,13 +25,13 @@ string Student::getFullname(){
 Date Student::getDoB(){
 	return this->DoB;
 };
-int Student::getMath(){
+float Student::getMath(){
 	return this->Math;
 };
-int Student::getPhys(){
+float Student::getPhys(){
 	return this->Phys;
 };
-int Student::getChem(){
+float Student::getChem(){
 	return this->Chem;
 };
 int Student::getGender(){
@@ -50,7 +50,7 @@ Student* Student::setDoB(Date DoB){
 	this->DoB = DoB;
 	return this;
 };
-Student* Student::setMath(int Math){
+Student* Student::setMath(float Math){
 	if (isValidPoint(Math)){
 		this->Math = Math;
 	} else {
@@ -58,7 +58,7 @@ Student* Student::setMath(int Math){
 	}
 	return this;
 };
-Student* Student::setPhys(int Phys){
+Student* Student::setPhys(float Phys){
 	if (isValidPoint(Phys)){
 		this->Phys = Phys;
 	} else {
@@ -66,7 +66,7 @@ Student* Student::setPhys(int Phys){
 	}
 	return this;
 };
-Student* Student::setChem(int Chem){
+Student* Student::setChem(float Chem){
 	if (isValidPoint(Chem)){
 		this->Chem = Chem;
 	} else {
@@ -79,13 +79,13 @@ Student* Student::setGender(int Gender){
 	return this;
 }
 		
-int Student::getAvg(){
-	float avg = (this->Math + this->Phys + this->Chem) / 3.0;
+float Student::getAvg(){
+	float avg = (float)(this->Math + this->Phys + this->Chem) / 3;
 	return avg;
 };
 
-bool isValidPoint(int p){
-	if (p > 100 || p < 0){
+bool isValidPoint(float p){
+	if (p > 10.0 || p < 0.0){
 		return false;
 	}
 	return true;
