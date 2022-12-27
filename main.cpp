@@ -23,6 +23,7 @@ void EditStudent(StudentList& db);
 void PrintDecendList(StudentList& db);
 void RebuildIndex(StudentList& db, Student**& dbIndex);
 void DumpIndex(Student** dbIndex, unsigned long long dbIndexSize);
+void SortIndexByAvgAsc(Student**& dbIndex, unsigned long long dbIndexSize);
 
 int main(){
 	string MainMenuItems[] = {"Nhap diem", "Sua diem", "Xoa", "Tim thi sinh", "In danh sach", "Thoat"};
@@ -171,5 +172,46 @@ void RebuildIndex(StudentList& db, Student**& dbIndex){
 	}
 	dbIndexSize = db.getSize();
 	dbIndex = db.toArray();
+	SortIndexByAvgAsc(dbIndex,dbIndexSize);
 	cout << "Hoan tat." << endl;
+};
+
+void merge(Student* a[], unsigned long long lo1, unsigned long long hi1, unsigned long long lo2, unsigned long long hi2){
+	unsigned long long tmpSize = hi2-lo2+hi1-lo1+2;
+	Student* tmpArr[tmpSize];
+	unsigned long long tmpInd = 0, ind1 = lo1, ind2 = lo2;
+	while ((ind1 <= hi1) && (ind2 <= hi2)){
+		if (a[ind1]->getAvg() > a[ind2]->getAvg()){
+			tmpArr[tmpInd++] = a[ind1++];
+		} else {
+			tmpArr[tmpInd++] = a[ind2++];
+		}
+	}
+	while (ind1 <= hi1){
+		tmpArr[tmpInd++] = a[ind1++];
+	}
+	while (ind2 <= hi2){
+		tmpArr[tmpInd++] = a[ind2++];
+	}
+	tmpInd = 0;
+	for (ind1 = lo1; ind1 <= hi1; ind1++){
+		a[ind1] = tmpArr[tmpInd++];
+	}
+	for (ind2 = lo2; ind2 <= hi2; ind2++){
+		a[ind2] = tmpArr[tmpInd++];
+	}
+}
+
+void mergeSort(Student* a[], unsigned long long lo, unsigned long long hi){
+	if (lo < hi){
+		unsigned long long mid = (lo+hi)/2;
+		mergeSort(a, lo, mid);
+		mergeSort(a, mid+1, hi);
+		merge(a, lo, mid, mid+1, hi);
+	}
+}
+
+void SortIndexByAvgAsc(Student**& dbIndex, unsigned long long dbIndexSize){
+	// merge sort
+	mergeSort(dbIndex, 0, dbIndexSize - 1);
 };
