@@ -22,6 +22,6 @@ void PrintDecendList(StudentList& db);
 
 // work via the index store
 void RebuildIndex(StudentList& db, Student**& dbIndex, unsigned long long& dbIndexSize);
-void DumpIndex(Student** dbIndex, unsigned long long& dbIndexSize);
+void DumpIndex(Student**& dbIndex, unsigned long long& dbIndexSize);
 void SortIndexByAvgAsc(Student**& dbIndex, unsigned long long& dbIndexSize);
 void FindStudentByName(Student**& dbIndex, unsigned long long& dbIndexSize);

@@ -108,7 +108,7 @@ void DumpList(StudentList& db){
 	}
 };
 
-void DumpIndex(Student** dbIndex, unsigned long long& dbIndexSize){
+void DumpIndex(Student**& dbIndex, unsigned long long& dbIndexSize){
 	cout << "Student list" << endl;
 	
 	cout.width(10);
