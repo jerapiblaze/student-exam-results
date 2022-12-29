@@ -1,4 +1,7 @@
+#pragma once
+
 #include "Student.h"
+#include "StudentNode.h"
 #include "Date.h"
 
 StudentNode::StudentNode(){

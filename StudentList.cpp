@@ -1,5 +1,10 @@
+#pragma once
+
 #include "Student.h"
 #include "Date.h"
+
+#include "StudentList.h"
+#include "StudentNode.h"
 
 StudentList::StudentList(){
 	this->HEAD = NULL;
