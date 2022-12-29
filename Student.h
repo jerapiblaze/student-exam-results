@@ -37,30 +37,3 @@ class Student{
 		
 		float getAvg();
 };
-
-class StudentNode{
-	public:
-		StudentNode* next;
-		Student data;
-		
-		StudentNode();
-		StudentNode(Student& s);	
-};
-
-class StudentList{
-	private:
-		StudentNode* HEAD;
-	public:
-		StudentList();
-		
-		StudentNode* addNode(Student& s);
-		void removeNode(int Id);
-		StudentNode* getNode(int Id);
-		
-		StudentNode* editNode(int Id, Student& s);
-		
-		StudentNode* getHead();
-		
-		unsigned long long getSize();
-		Student** toArray();
-};
